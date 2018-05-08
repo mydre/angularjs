@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    {{data|limitTo: 3:2}}<!-- 从下标为2的地方开始，取3个数据 -->
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+            $scope.data = '后盾网人人做后盾';
+        }]);
+    </script>
+</div>
+</body>
+</html>

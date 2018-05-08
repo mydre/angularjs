@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div  ng-controller="ctrl1" >
+
+    </div>
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl1',['$scope','$http',function($scope,$http){
+            $http({//$http()函数内部的形参是一个对象，使用{}包裹着
+                method: 'post',
+                url: 'http://192.168.125.135/2.php',
+                // data:{id:1,name:'后盾php'}
+                //第二种方式，前台做改变
+                data: $.param({id:1,name:'后盾php'}),//jQeuqy的方法，对 对象进行序列化
+                headers:{'Content-type':'application/x-www-form-urlencoded'}//告诉php，已经被编码过了，让它改变处理方式
+            }).then(function(response){//请求成功的时候执行
+                console.log(response);
+            },function(response){//请求失败的时候执行
+                console.log(response);
+            });
+        }]);
+    </script>
+</body>
+</html>
+
+
+2.php
+<?php
+// 指定允许其他域名访问    
+header('Access-Control-Allow-Origin:*');    
+
+// 响应头设置    
+header('Access-Control-Allow-Headers:x-requested-with,content-type');  
+
+//print_r($_POST);
+//第一种方式，后台做改变
+//$content = file_get_contents('php://input');
+//print_r($content);
+//print_r('-----------------------');
+//print_r(json_decode($content,true));
+
+//第二种方式，前台做改变
+print_r($_POST);
+
+?>

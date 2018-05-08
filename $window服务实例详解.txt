@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-controller="ctrl1" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div ng-click="get()">点击我</div><br>
+    {{message}}<br>
+    <div ng-click="getClientHeight()">点击我计算clientheight</div><br>
+    {{clientHeight}}<br>
+    <div ng-click="getScrollHeight()">点击我计算scrollheight</div><br>
+    {{scrollHeight}}<br>
+    <div ng-click="getInput()">点击我计算input</div><br>
+    {{input}}<br>
+
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl1',['$scope','$window',function($scope,$window){
+            $scope.get = function(){
+                if($window.confirm('确定点击吗？')){
+                    $scope.message='你已经点击了确定';
+                }else{
+                    $scope.message='你点击了取消';
+                }
+            };
+            $scope.getClientHeight = function() {
+                $scope.clientHeight = $window.document.body.clientHeight;
+            };
+            $scope.getScrollHeight = function(){
+                $scope.scrollHeight = $window.document.body.scrollHeight;
+            };
+            $scope.getInput = function(){
+                $scope.input = $window.prompt();
+            };
+        }]);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    <input type="checkbox" ng-model="copyright">接受协议<br>
+    <input type="submit" ng-disabled="!copyright">
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+
+        }]);
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4" class="app">
+                <div class="mobile">
+                    <dl>
+                        <dt>游戏</dt>
+                        <dd>
+                            <a href="#">红警</a>
+                            <a href="#">全民突击</a>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>电影</dt>
+                        <dd>
+                            <a href="#">战狼</a>
+                            <a href="#">金刚狼</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">编辑</h3>
+                    </div>
+                    <div class="panel-body">
+                        panel-body
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+
+        }]);
+    </script>
+</div>
+</body>
+</html>

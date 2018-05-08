@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    {{data|orderBy: 'id':true}}<br><!--true代表对id使用降序排序-->
+    {{data|orderBy: 'click':true}}<br>
+    {{data|filter:'后':false}}<br><!--这里true代表完全匹配-->
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+            $scope.data = [
+                {id: 1,name: '后盾人',click: 5},
+                {id: 2,name: '后盾',click: 6},
+                {id: 3,name: '李四',click: 4}
+            ];
+        }]);
+    </script>
+</div>
+</body>
+</html>

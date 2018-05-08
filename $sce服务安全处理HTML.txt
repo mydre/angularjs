@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-controller="ctrl1" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div ng-bind-html="data | trustHtml"></div><br>
+    <div ng-bind-html="data2"></div>
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.filter('trustHtml',['$sce',function($sce){//注：filter本身就是一个函数
+            //在过滤器的内部可以直接使用在$scope中定义的变量
+            return function(data){
+                return $sce.trustAsHtml(data);
+            }
+        }]);
+        m.controller('ctrl1',['$scope','$sce',function($scope,$sce){
+            $scope.data = '<h3 style="color: red;">你好</h3>';
+            $scope.data2 = $sce.trustAsHtml($scope.data);
+        }]);
+
+    </script>
+</body>
+</html>

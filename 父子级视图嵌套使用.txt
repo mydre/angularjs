@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div ui-view></div>
+    <div ui-view="content"></div><!--表示容器-->
+</div>
+<script>
+    var m = angular.module('hd', ['ui.router']);//继承了ui.router,那么其中的东西就都可以使用了
+    m.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+        $urlRouterProvider.otherwise('/my');
+        $stateProvider
+            .state('my',{
+                url:'/my',
+                views: {
+                    '@':{
+                        templateUrl:'view2/my.html'
+                    },
+                    'content':{
+                        template:'欢迎来到后盾网视频教程'
+                    }
+                }
+            })
+            .state('my.video',{
+                url:'/video',
+                views: {
+                    'son@my':{
+                        templateUrl:'view2/video.html'
+                    },
+                    'content@':{//加@表示去顶级容器中去找
+                        template:''
+                    }
+                }
+            })
+    }]);
+</script>
+</body>
+</html>

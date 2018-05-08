@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+<div ng-controller="ctrl">
+    {{name + 'houdunwang.com'}}fdjklsfdslfkjsd
+    <hr/>
+    {{user.username}}
+    <hr/>
+    <h3 ng-bind="name+'fsdfds'"></h3>
+</div>
+
+<script>
+    var m = angular.module('hd', []);
+    m.controller('ctrl',['$scope', function($scope){
+        $scope.name='后盾网';
+        $scope.user = {'username': 'nihao'};
+    }]);
+</script>
+
+</body>
+</html>

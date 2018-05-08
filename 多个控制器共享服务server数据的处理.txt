@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div  ng-controller="ctrl1" >
+        <table border="1 solid" width="400px">
+            <tr>
+                <td>网站</td>
+                <td>网址</td>
+            </tr>
+            <tr ng-repeat="(k,v) in data.webs">
+                <td>{{v.name}}</td>
+                <td>{{v.url}}</td>
+            </tr>
+        </table>
+    </div>
+    <div  ng-controller="ctrl2" >
+        <table border="1 solid" width="400px">
+            <tr>
+                <td>网站</td>
+                <td>网址</td>
+            </tr>
+            <tr ng-repeat="(k,v) in data.webs">
+                <td>{{v.name}}</td>
+                <td>{{v.url}}</td>
+            </tr>
+        </table>
+        {{web}}<br>
+        <button ng-click="removeAll()">点我删除所有</button>
+    </div>
+
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.factory('videoServer',['$http',function($http){//factory用于自定义服务，服务可以在控制器中使用(可以在控制器中利用angularjs的依赖注入的思想)
+            obj = {
+                //data : [],//[]表示数组，可以存储多个对象
+                data :{webs:[]},//一个数组构成一个大的对象
+                all:function(){
+                    return $http({url:'http://192.168.125.135/3.php'}).then(function(response){
+                        //return 'houdunwang.com';//这里显式返回的将在调用它的地方充当response对象
+                        //return obj.data = response.data;
+                        //return obj.data.webs = response.data;
+                        //修改内部的，返回外部的
+                        obj.data.webs = response.data;
+                        return obj.data;
+                    });
+                },
+                find:function(id){
+                    //这里一定要return
+                    return this.all().then(function(data){//这里的data是自己起的名字，叫什么都可以，是在其调用的all()方法的最底层返回的东西
+                        for(var i = 0;i < data.webs.length;i++){
+                            if(data.webs[i].id==id){
+                                return data.webs[i];
+                            }
+                        }
+                        return null;
+                    });
+                },
+                flush:function(){
+                    obj.data.webs = [];
+                }
+            }
+            return obj;
+        }]);
+        m.controller('ctrl1',['$scope','videoServer',function($scope,videoServer){
+            videoServer.all().then(function(resp_data){
+                $scope.data = resp_data;
+            });
+        }]);
+        m.controller('ctrl2',['$scope','videoServer',function($scope,videoServer){
+            videoServer.all().then(function(resp_data){
+                $scope.data = resp_data;
+            });
+            videoServer.find(1).then(function(data){
+                $scope.web = data;
+                alert(data);
+                console.log($scope.web);
+            });
+            $scope.removeAll = function(){
+                videoServer.flush();
+            }
+        }]);
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div ng-controller="ctrl1">
+        <!--父亲：<input type="text" ng-model="name">-->
+        <!--<div ng-controller="ctrl2">-->
+            <!--儿子：<input type="text" ng-model="name">-->
+        <!--</div>-->
+        父亲：<input type="text" ng-model="data.name">
+        <div ng-controller="ctrl2">
+            儿子：<input type="text" ng-model="data.name">
+        </div>
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        // m.controller('ctrl1',['$scope',function($scope){//继承并隔离(非对象)
+        //     $scope.name='father';
+        // }]);
+        // m.controller('ctrl2',['$scope',function($scope){
+        //
+        // }]);
+        m.controller('ctrl1',['$scope',function($scope){//继承但不隔离(对象)
+            $scope.data={name:'father'};
+        }]);
+        m.controller('ctrl2',['$scope',function($scope){
+
+        }]);
+
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    搜索：<input type="text" ng-model="search"><br>
+    <table border="1 solid" width="400" style="text-align: center;">
+        <tr>
+            <td ng-click="orderBy('id')">id</td>
+            <td ng-click="orderBy('click')">点击量</td>
+            <td ng-click="orderBy('title')">标题</td>
+        </tr>
+        <tr ng-repeat="(k,v) in lists">
+            <td>{{v.id}}</td>
+            <td>{{v.click}}</td>
+            <td>{{v.title}}</td>
+        </tr>
+    </table>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope','$filter', function($scope,$filter){//这里$scope排在$filter的前面，顺序要一致
+            $scope.data = [
+                {id: 1,click: 5,title: '后盾人'},
+                {id: 2,click: 6,title:'后盾网'},
+                {id: 3,click: 4,title:'人人爱学习'}
+            ];
+            $scope.orderBy=function(field){
+                if(arguments.callee[field] == undefined){
+                    arguments.callee[field] = false;
+                }
+                arguments.callee[field] = !arguments.callee[field];
+                $scope.lists = $filter('orderBy')($scope.lists,field,arguments.callee[field]);//这里一定要把值带回
+            };
+            $scope.search = '';
+            $scope.lists = $scope.data;//定义lists
+            $scope.$watch('search',function(n,o){//监听list
+                $scope.lists = $filter('filter')($scope.data,n);//监听之后给list复制
+            });
+        }]);
+    </script>
+</div>
+</body>
+</html>

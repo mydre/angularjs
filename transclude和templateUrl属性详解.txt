@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <!--使用ng-controller定义控制器的时候，需要注册，如果不注册的话就会报错-->
+    <!--在模块的内部使用指令-->
+    <hd-cms color="green">都使用后盾</hd-cms><!-- 作为元素来使用 -->
+    <hr>
+    <h1 hd-cms color="red">后盾网人人用后盾</h1><!-- 作为属性来使用 -->
+    <script>
+        var m = angular.module('hd', []);
+        m.directive('hdCms',[function(){//directive函数的第二个参数是数组
+            return{//返回一个对象
+                restrict:'AE',
+                //transclude:true,
+                //template:'<h1><div ng-transclude=""></div>我需要替换别人么</h1>',
+
+                replace: true,//注意：replace为true的时候，templateUrl要为块级标签
+                templateUrl: '/ajs/app/view1/view1.html'//写路径的时候，请注意ajs在根目录下面
+            };
+        }]);
+    </script>
+</div>
+</body>
+</html>

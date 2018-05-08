@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div  ng-controller="ctrl1" >
+        <table border="1 solid" width="400px">
+            <tr>
+                <td>网站</td>
+                <td>网址</td>
+            </tr>
+            <tr ng-repeat="(k,v) in data">
+                <td>{{v.name}}</td>
+                <td>{{v.url}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.factory('videoServer',['$http',function($http){//factory用于自定义服务，服务可以在控制器中使用(可以在控制器中利用angularjs的依赖注入的思想)
+            return {
+                /*第一种方式：使用回调函数，传递闭包
+                get:function(callback){//回调函数是为了里面的形式参数在外部调用毁掉函数的地方也能使用
+                    //可以把callback想象成是一个函数，是函数内部的形式函数即：function(){}
+                    //alert('this is videoServer');
+                    $http({url:'http://192.168.125.135/1.php'}).then(function(response){
+                        return callback(response);//为形式函数传递参数，以便于在外部使用
+                    });
+                }
+                * */
+                //第二种方式，返回permission对象
+                all:function(){
+                    return $http({url:'http://192.168.125.135/1.php'});
+                }
+            }
+        }]);
+        m.controller('ctrl1',['$scope','videoServer',function($scope,videoServer){
+            /*第一种方式
+            videoServer.get(function(response){
+                $scope.data = response.data;
+            });
+            * */
+            //第二种方式
+            videoServer.all().then(function(response){
+                $scope.data = response.data;
+            });
+        }]);
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <a ui-sref="home">首页</a>
+    <a href="#!/lists">列表页</a>
+    <div ui-view></div>
+</div>
+<script>
+    var m = angular.module('hd', ['ui.router']);//继承了ui.router,那么其中的东西就都可以使用了
+    m.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+        $urlRouterProvider.otherwise('');
+        $stateProvider.
+            state('default',{
+                url:'',
+                template:'<h1>默认的页面</h1>'
+            })
+            .state('home',{
+                url:'/home',
+                templateUrl: 'view2/xx.html',
+                // controller:['$scope',function($scope){
+                //     $scope.name = '向军老师';
+                // }]
+                controller:'ctrl'
+            })
+            .state('lists',{
+                url:'/lists',
+                template:'<h1>列表页</h1>'
+            })
+    }]);
+    m.controller('ctrl',['$scope',function($scope){
+        $scope.data = [
+            {title:'后盾网'},
+            {title:'人人做后盾'}
+        ]
+    }]);
+</script>
+
+
+xx.html
+后盾网，人人做后盾：{{name}}
+<li ng-repeat="v in data">{{v.title}}</li>
+</body>
+</html>

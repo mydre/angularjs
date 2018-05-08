@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div ui-view></div>
+</div>
+    <script>
+        var m = angular.module('hd', ['ui.router']);//继承了ui.router,那么其中的东西就都可以使用了
+        m.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+            //定义默认路由
+            $urlRouterProvider.otherwise('/hd');
+            //
+            $stateProvider.state('default',{
+                url: '/hd',
+                template: '<h1>这是标题</h1>'
+            });
+        }]);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

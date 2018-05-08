@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    {{price}}<br>
+    {{price|currency: '$':2}}<br>
+    {{price|number: 2}}
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+            $scope.price = 11344.456;
+        }]);
+    </script>
+</div>
+</body>
+</html>

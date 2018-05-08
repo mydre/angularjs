@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+
+    <select ng-options="v.value as v.name for v in data" ng-model="city">
+        <option value="">请选择城市</option>
+    </select>
+    {{city}}
+
+
+<script>
+    var m = angular.module('hd', []);
+    m.controller('ctrl',['$scope', function($scope){
+        //$scope.city = 'beijing';
+        $scope.data = [
+            {name:'后盾网', value:'houdunwan'},
+            {name:'北京',value:'beijing'},
+            {name:'南京',value:'nanjing'},
+        ];
+    }]);
+</script>
+
+</body>
+</html>

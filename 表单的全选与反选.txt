@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    <table border="1" width="500">
+        <tr>
+            <td>
+                <input type="checkbox" ng-model="all"><!-- 这里的all会被controller映射到$all -->
+                <span ng-bind="all?'取消':'全选'"></span>
+            </td>
+            <td>姓名</td>
+            <td>爱好</td>
+        </tr>
+        <tr ng-repeat="v in user">
+            <td>
+                <input type="checkbox" ng-checked="all">
+            </td>
+            <td>{{v.name}}</td>
+            <td>{{v.favorite}}</td>
+        </tr>
+    </table>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+            $scope.user = [
+                {name: '湘军', favorite: '打篮球'},
+                {name: '李飞', favorite: '游泳'}
+            ]
+        }]);
+    </script>
+</div>
+</body>
+</html>

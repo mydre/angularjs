@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+
+    年龄：<input type="text" ng-model="user.age">
+    邮箱：<input type="text" ng-model="user.mail" ng-readonly="user.uid" value="user.mail">
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+            $scope.user = {age: 20,uid: 1, mail: '3243242@qq.com'};
+        }]);
+    </script>
+</div>
+</body>
+</html>

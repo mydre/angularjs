@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <hd-cms></hd-cms>
+    <hd-cms></hd-cms>
+    <hd-cms></hd-cms>
+    <hd-cms></hd-cms>
+    <script>
+        var m = angular.module('hd', []);
+        m.directive('hdCms',[function(){
+            return {
+                restrict: 'E',
+                templateUrl: '/ajs/app/view1/view1.html',
+                replace: true,
+                controller: ['$scope',function($scope){
+                    $scope.data = [
+                        {id:1,name:'向军'},
+                        {id:2,name:'李白'},
+                        {id:3,name:'杜甫'}
+                    ];
+                }]
+            }
+        }]);
+    </script>
+</div>
+</body>
+</html>
+
+
+<span>
+    <table border="1 solid" style="width: 400px;">
+        <tr>
+            <td>id</td>
+            <td>姓名</td>
+        </tr>
+        <tr ng-repeat="(k,v) in data">
+            <td>{{v.id}}</td>
+            <td>{{v.name}}</td>
+        </tr>
+    </table>
+</span>

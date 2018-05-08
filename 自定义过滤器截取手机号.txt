@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    <table border="1 solid" width="400">
+        <tr>
+            <td>id</td>
+            <td>姓名</td>
+            <td>手机</td>
+        </tr>
+        <tr ng-repeat="(k,v) in data">
+            <td>{{v.id}}</td>
+            <td>{{v.name}}</td>
+            <td>{{v.mobile|truncate:8}}</td><!-- 从这里输入要显示的位数 -->
+        </tr>
+    </table>
+    <script>
+        var m = angular.module('hd', []);
+        m.filter('truncate',function(){
+            //len = len?len:3;
+            return function(mobile,len){//这里的mobile是下面控制器中的$scope.data 中的 mobile
+                len = len?len:3;
+                return mobile.substring(0,11-len) + new String('*').repeat(len);
+            }
+        });
+        m.controller('ctrl',['$scope','$filter', function($scope,$filter){
+            $scope.data = [
+                {id: 1,name:'向军',mobile:'18238883833'},
+                {id: 2,name:'古丽老师',mobile:'13885445533'}
+            ];
+        }]);
+    </script>
+</div>
+</body>
+</html>

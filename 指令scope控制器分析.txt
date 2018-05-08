@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div ng-controller="ctrl1">
+        <input type="text" ng-model="name"><br>
+        <hd-cms></hd-cms><br>
+        <hd-cms></hd-cms><br>
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl1',['$scope',function($scope){//继承但不隔离(对象)
+            $scope.name='向军';
+        }]);
+        m.directive('hdCms',[function(){
+            return {
+                restrict: 'AEC',
+                template: '{{name}}<input type="text" ng-model="name">',
+                //scope: false  //指令和控制器共享
+                // scope: true  //指令改变则创建自己的区域
+                scope: {}  //  指令和父级的controller分隔
+            }
+        }]);
+    </script>
+</div>
+</body>
+</html>

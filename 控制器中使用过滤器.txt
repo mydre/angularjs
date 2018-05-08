@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    {{data}}
+    <button ng-click="orderBy()">点击我</button>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope','$filter', function($scope,$filter){//这里$scope排在$filter的前面，顺序要一致
+            $scope.data = [
+                {id: 1,name: '后盾人',click: 5},
+                {id: 2,name: '后盾',click: 6},
+                {id: 3,name: '李四',click: 4}
+            ];
+            $scope.orderBy = function(){
+                $scope.data = $filter('orderBy')($scope.data,'id',true);
+            }
+        }]);
+    </script>
+</div>
+</body>
+</html>

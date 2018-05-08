@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div  ng-controller="ctrl1" ></div><br>
+    <div  ng-controller="ctrl2" ></div><br>
+
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl1',['$scope','$cacheFactory',function($scope,$cacheFactory){
+            var obj = $cacheFactory('hdcms');
+            obj.put('web',{name:'后盾人',url:'www.houdunre.com'});
+            console.log(obj.get('web'));
+        }]);//controller也是函数
+        m.controller('ctrl2',['$scope','$cacheFactory',function($scope,$cacheFactory){
+            var obj = $cacheFactory.get('hdcms');
+            console.log(obj.get('web').name);
+            //obj.remove('web');//删除key对应的数据
+            obj.destroy('hdcms');//删除数据库
+            console.log(obj.get('web'));
+        }]);
+    </script>
+</body>
+</html>

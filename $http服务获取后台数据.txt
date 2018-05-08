@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <div  ng-controller="ctrl1" >
+        <table border="1 solid" width="500px">
+            <tr>
+                <td>网站名称</td>
+                <td>网址</td>
+            </tr>
+            <tr ng-repeat="(k,v) in data">
+                <td>{{v.name}}</td>
+                <td>{{v.url}}</td>
+            </tr>
+        </table>
+    </div><br>
+</div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl1',['$scope','$http',function($scope,$http){
+            $http({//$http()函数内部的形参是一个对象，使用{}包裹着
+                method: 'get',
+                url: 'http://192.168.125.135/1.php'
+            }).then(function(response){//请求成功的时候执行
+                console.log(response);
+                $scope.data = response.data;
+            },function(response){//请求失败的时候执行
+                console.log(response);
+            })
+        }]);
+    </script>
+</body>
+</html>
+
+
+<?php
+// 指定允许其他域名访问    
+header('Access-Control-Allow-Origin:*');    
+// 响应类型    
+header('Access-Control-Allow-Methods:POST');    
+// 响应头设置    
+header('Access-Control-Allow-Headers:x-requested-with,content-type');  
+$data = [
+	['name' => '后盾人','url' => 'houdunren.com'],
+	['name' => '后盾网','url' => 'houdunwang.com']
+];
+echo json_encode($data,JSON_UNESCAPED_UNICODE);
+?>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+    颜色：<input type="text" ng-model="color"><br>
+    大小：<input type="text" ng-model="size"><br>
+    <span ng-style="{color: color,fontSize: size+'px'}">字体</span>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl',['$scope', function($scope){
+
+        }]);
+    </script>
+</div>
+</body>
+</html>

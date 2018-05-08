@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body>
+<div ng-app="hd" ng-cloak class="ng-cloak"><!--解决闪屏问题-->
+    <a ui-sref="home">首页</a>
+    <div ui-view></div>
+</div>
+<script>
+    var m = angular.module('hd', ['ui.router']);//继承了ui.router,那么其中的东西就都可以使用了
+    m.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+        $urlRouterProvider.otherwise('home');
+        $stateProvider.
+            state('default',{
+                url:'',
+                template:'<h1>默认的页面</h1>'
+            })
+            .state('home',{
+                url:'/home',
+                templateUrl: 'view2/xx.html',
+                // controller:['$scope',function($scope){
+                //     $scope.name = '向军老师';
+                // }]
+                controller:'ctrl'
+            })
+            .state('users',{
+                url:'/users/{id}',//在路由其中接受参数
+                template:'<h1>用户名：{{user.name}}</h1>',
+                controller:'ctrl'
+            })
+    }]);
+    m.controller('ctrl',['$stateParams','$scope',function($stateParams,$scope){
+        $scope.user = [
+            {id:1,name:'向军'},
+            {id:2,name:'古丽老师'}
+        ];
+        id = $stateParams.id;
+        if(id){
+            for(var i = 0; i < $scope.user.length;i++){
+                if(id == $scope.user[i].id){
+                    $scope.user = $scope.user[i];
+                }
+            }
+        }
+    }]);
+</script>
+</body>
+</html>
+
+
+
+<li ng-repeat="v in user">
+    <a href="" ui-sref="users({id:v.id})">{{v.name}}</a>
+</li>

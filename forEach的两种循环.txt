@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/angular/angular.min.js"></script>
+</head>
+<style>
+    .ng-cloak{
+        display: none;
+    }
+</style>
+<body ng-app="hd" ng-cloak class="ng-cloak" ng-controller="ctrl"><!--解决闪屏问题-->
+{{data}}
+<script>
+    var m = angular.module('hd', []);
+    m.controller('ctrl',['$scope', function($scope){
+        // $scope.data = [
+        //     {'name':'后盾网','url':'houdunwang'},
+        //     {'name':'后盾人','url':'houdunren'}
+        // ]
+        // angular.forEach($scope.data,function(v,k){
+        //     console.log(v,k);
+        // });
+        $scope.data = {'name':'后盾网','url':'houdunwang'};
+        angular.forEach($scope.data,function(v,k){
+            console.log(v,k);//这里的k分别是name和url
+        });
+    }]);
+</script>
+</body>
+</html>
