@@ -1,0 +1,46 @@
+    http(parameter) {
+        let deferred = this.$q.defer();//自定义promise对象
+        this.$http(parameter).then((res) => {//得到promise对象,用then方法响应返回（难道then方法是属于promise对象的），进行回调
+            deferred.resolve(res);
+        }, (err) => {
+            deferred.reject(err);
+        });
+        return deferred.promise;//用来将promise对象回调给controller，这里的回调者，是deferred对象
+    }
+
+
+$q服务是在Angularjs中用来创建promise对象的，但它首先创建一个defered对象
+打印defered对象：
+	promise：d
+	reject: function(c)
+	resolve: function(c)
+	__proto__: Object
+
+3个方法：resolve，reject，notify，分别用于接收/拒绝/通知，
+注意：defered的promise是基本的promise对象，没有success和error函数，基本的promise部分，拥有then，catch，finally函数
+
+
+
+
+$http服务，对原声XMLHttpRequest对象的简单封装，只接受一个参数的方法。
+返回一个promise对象，具有success和error两个方法，
+因为返回一个promise对象，因此响应返回时用then方法来处理，会得到一个特殊的参数，代表了对象的成功或失败ixni
+或者可以使用success和error回调代替
+
+$http(options)返回的是一个被封装的promise对象
+$$state: Object
+error: function(a)
+success: function(a)
+__proto__: Object
+	catch: function(a)
+	constructor: function d()
+	finally: function(a,b)
+	then: function(a,b,c)
+	__proto__: Object
+
+除了基本的promise部分，这个promis对象还有success和error函数，这是$http返回的时候封装的，
+success的回调函数返回的data直接就是我们想要的“数据部分”，那么如果我用的是then，
+那么返回的除了数据部分，还有额外的部分（比如状态码）
+
+
+基本的promise部分，拥有then，catch，finally函数
